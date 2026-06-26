@@ -1,209 +1,292 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Styles d'animation — M. Mbaye</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, -apple-system, sans-serif; background: #f9f8f6; color: #1a1a18; min-height: 100vh; }
-    .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Styles d'animation — M. Mbaye</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f3;--surface:#fff;--surface2:#f0ede8;--border:#e4e1db;
+  --text:#1c1b19;--muted:#6b6860;--hint:#9e9b95;
+  --teal:#1D9E75;--teal-light:#E1F5EE;--teal-dark:#085041;
+  --blue:#378ADD;--blue-light:#E6F1FB;--blue-dark:#0C447C;
+  --coral:#D85A30;--coral-light:#FAECE7;--coral-dark:#712B13;
+  --gray:#888780;--gray-light:#F1EFE8;--gray-dark:#444441;
+  --radius:14px;--radius-sm:8px;--shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
+}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:var(--blue-dark)}
 
-    .hero { padding: 2rem 0 1.5rem; border-bottom: 1px solid #e0ded6; margin-bottom: 2rem; }
-    .tag { font-size: 12px; color: #185FA5; background: #E6F1FB; border-radius: 8px; padding: 3px 10px; display: inline-block; margin-bottom: 0.75rem; }
-    .hero h1 { font-size: 26px; font-weight: 500; margin-bottom: 0.5rem; }
-    .hero p { font-size: 14px; color: #5f5e5a; line-height: 1.6; }
+.page{max-width:780px;margin:0 auto;padding:2rem 1.25rem 5rem}
 
-    .section { margin-bottom: 2.5rem; }
-    .section h2 { font-size: 18px; font-weight: 500; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e0ded6; }
+/* HERO */
+.hero{padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-dark);background:var(--teal-light);border-radius:99px;padding:4px 12px;margin-bottom:1rem}
+.hero h1{font-size:clamp(22px,4vw,32px);font-weight:600;letter-spacing:-.02em;margin-bottom:.6rem}
+.hero p{font-size:15px;color:var(--muted);max-width:540px}
 
-    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
-    .intro-card { background: #f1efe8; border-radius: 12px; padding: 1rem 1.25rem; }
-    .intro-card h3 { font-size: 12px; font-weight: 500; color: #5f5e5a; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    .intro-card ul { list-style: none; font-size: 14px; line-height: 1.9; }
-    .intro-card ul li::before { content: "→ "; color: #888780; }
+/* SECTIONS */
+.section{margin-bottom:2.5rem}
+.section-label{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem}
+.section-label h2{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.section-label .num{width:26px;height:26px;border-radius:50%;background:var(--text);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-    .quiz-intro { font-size: 14px; color: #5f5e5a; margin-bottom: 1rem; line-height: 1.6; background: #f1efe8; border-radius: 8px; padding: 0.75rem 1rem; }
+/* COOP CARDS */
+.coop-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.coop-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.coop-card h3{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.coop-card li{list-style:none;font-size:14px;padding:4px 0;display:flex;align-items:center;gap:8px}
+.coop-card li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0}
 
-    .progress-bar-wrap { background: #e0ded6; border-radius: 99px; height: 6px; margin: 1rem 0 0.4rem; overflow: hidden; }
-    .progress-bar-fill { height: 100%; border-radius: 99px; background: #1D9E75; transition: width 0.3s; }
-    .progress-label { font-size: 12px; color: #888780; text-align: right; }
+/* QUIZ */
+.quiz-banner{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-size:14px;color:var(--muted);line-height:1.7}
+.quiz-banner strong{color:var(--text)}
 
-    .question-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e8e6de; }
-    .question-num { font-size: 12px; font-weight: 500; color: #888780; min-width: 24px; margin-top: 3px; }
-    .question-text { font-size: 14px; flex: 1; line-height: 1.5; }
-    .question-btns { display: flex; gap: 6px; flex-shrink: 0; }
-    .btn-oui, .btn-non { padding: 4px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 1px solid #ccc; background: #fff; color: #1a1a18; transition: all 0.15s; }
-    .btn-oui.active { background: #E1F5EE; border-color: #0F6E56; color: #085041; font-weight: 500; }
-    .btn-non.active { background: #f1efe8; border-color: #888780; color: #2c2c2a; font-weight: 500; }
+/* STEPPER */
+.stepper-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.stepper-count{font-size:13px;color:var(--muted)}
+.stepper-count span{font-weight:600;color:var(--text)}
+.stepper-pct{font-size:13px;font-weight:600;color:var(--teal)}
+.prog-track{height:6px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:1.75rem}
+.prog-fill{height:100%;border-radius:99px;background:var(--teal);transition:width .4s cubic-bezier(.4,0,.2,1)}
 
-    .btn-calc { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 8px; background: #fff; border: 1px solid #bbb; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 1.25rem; transition: background 0.15s; }
-    .btn-calc:hover { background: #f1efe8; }
-    .btn-reset { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; background: transparent; border: 1px solid #ddd; font-size: 13px; cursor: pointer; margin-top: 0.75rem; margin-left: 8px; color: #5f5e5a; }
-    .btn-reset:hover { background: #f1efe8; }
+/* QUESTION CARD */
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem 1.5rem;box-shadow:var(--shadow);transition:opacity .25s,transform .25s}
+.q-card.exit{opacity:0;transform:translateY(-8px)}
+.q-card.enter{opacity:0;transform:translateY(8px)}
+.q-style-pill{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:1rem}
+.pill-a{background:var(--gray-light);color:var(--gray-dark)}
+.pill-b{background:var(--teal-light);color:var(--teal-dark)}
+.pill-c{background:var(--blue-light);color:var(--blue-dark)}
+.pill-d{background:var(--coral-light);color:var(--coral-dark)}
+.q-text{font-size:16px;font-weight:500;line-height:1.55;margin-bottom:1.5rem;letter-spacing:-.01em}
+.q-actions{display:flex;gap:10px}
+.btn-choice{flex:1;padding:12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-choice:hover{border-color:var(--text);background:var(--surface2)}
+.btn-choice.chosen-yes{border-color:var(--teal);background:var(--teal-light);color:var(--teal-dark)}
+.btn-choice.chosen-no{border-color:var(--border);background:var(--surface2);color:var(--muted)}
+.q-nav{display:flex;align-items:center;justify-content:space-between;margin-top:1rem}
+.btn-nav{padding:8px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+.btn-nav:hover{background:var(--surface2)}
+.btn-nav:disabled{opacity:.35;cursor:default}
+.q-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:320px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s}
+.dot.answered{background:var(--teal)}
+.dot.current{background:var(--teal);transform:scale(1.3)}
 
-    #result-section { display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e0ded6; }
-    .result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.25rem; }
-    .result-card { border-radius: 12px; padding: 1rem; text-align: center; border: 1px solid #e0ded6; background: #fff; position: relative; }
-    .result-card.dominant { border: 2px solid #1D9E75; }
-    .result-badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 8px; background: #E1F5EE; color: #085041; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); white-space: nowrap; display: none; }
-    .result-card.dominant .result-badge { display: block; }
-    .result-style-letter { font-size: 28px; font-weight: 500; margin-bottom: 4px; }
-    .result-style-name { font-size: 11px; color: #888780; margin-bottom: 8px; }
-    .result-score { font-size: 22px; font-weight: 500; }
-    .result-score-label { font-size: 11px; color: #888780; }
-    .result-bar-wrap { height: 6px; border-radius: 99px; margin-top: 8px; background: #f1efe8; overflow: hidden; }
-    .result-bar-fill { height: 100%; border-radius: 99px; }
+/* CALCULATE BUTTON */
+.btn-calc-wrap{margin-top:1.25rem;display:flex;gap:10px;align-items:center}
+.btn-calc{padding:12px 24px;border-radius:var(--radius-sm);border:none;background:var(--text);color:#fff;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .15s}
+.btn-calc:hover{opacity:.85}
+.btn-reset-sm{padding:10px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);transition:background .15s}
+.btn-reset-sm:hover{background:var(--surface2)}
 
-    .styles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .style-card { border-radius: 12px; border: 1px solid #e0ded6; background: #fff; overflow: hidden; }
-    .style-card-header { padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 10px; }
-    .style-letter-badge { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; flex-shrink: 0; }
-    .style-card-title { font-size: 15px; font-weight: 500; }
-    .style-card-sub { font-size: 11px; color: #888780; }
-    .style-card-body { padding: 0.75rem 1.25rem 1rem; font-size: 13px; color: #5f5e5a; line-height: 1.6; border-top: 1px solid #f0ede5; }
+/* RESULTS */
+.results-section{display:none;margin-top:2rem;border-top:1px solid var(--border);padding-top:2rem}
+.results-title{font-size:18px;font-weight:600;letter-spacing:-.02em;margin-bottom:1.25rem}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.r-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;position:relative}
+.r-card.dom{border-color:var(--teal)}
+.r-dom-badge{display:none;position:absolute;top:-11px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--teal);color:#fff;border-radius:99px;padding:2px 10px}
+.r-card.dom .r-dom-badge{display:block}
+.r-letter{font-size:26px;font-weight:700;margin-bottom:2px}
+.r-name{font-size:10px;color:var(--muted);margin-bottom:.6rem;line-height:1.3}
+.r-num{font-size:22px;font-weight:700}
+.r-denom{font-size:13px;color:var(--muted);font-weight:400}
+.r-bar-bg{height:5px;border-radius:99px;background:var(--border);margin-top:8px;overflow:hidden}
+.r-bar-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.r-comment{font-size:14px;color:var(--muted);line-height:1.7;background:var(--teal-light);border-radius:var(--radius-sm);padding:.875rem 1rem;color:var(--teal-dark)}
 
-    .tableau-wrap { overflow-x: auto; }
-    table.summary { width: 100%; border-collapse: collapse; font-size: 13px; }
-    table.summary th { background: #f1efe8; padding: 10px 12px; text-align: left; font-weight: 500; border-bottom: 1px solid #e0ded6; }
-    table.summary td { padding: 10px 12px; border-bottom: 1px solid #e8e6de; vertical-align: top; line-height: 1.5; }
-    table.summary tr:last-child td { border-bottom: none; }
+/* STYLE CARDS */
+.style-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.sc-head{padding:.875rem 1.25rem;display:flex;align-items:center;gap:10px}
+.sc-badge{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.sc-label{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.sc-qs{font-size:11px;color:var(--muted)}
+.sc-body{padding:.875rem 1.25rem 1.1rem;font-size:13px;color:var(--muted);line-height:1.65;border-top:1px solid var(--border)}
 
-    .dynamique-card { background: #f1efe8; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
-    .dynamique-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 0.6rem; }
-    .roles-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .role-badge { font-size: 12px; padding: 4px 12px; border-radius: 99px; background: #fff; border: 1px solid #d3d1c7; }
-    .note { font-size: 13px; color: #5f5e5a; line-height: 1.7; }
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--surface2);padding:10px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.02em;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
 
-    footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e0ded6; font-size: 12px; color: #888780; text-align: center; }
+/* DYNAMIQUE */
+.dyn-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem}
+.dyn-card h3{font-size:14px;font-weight:600;margin-bottom:.75rem}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
+.role{font-size:12px;font-weight:500;padding:5px 12px;border-radius:99px;background:var(--surface2);border:1px solid var(--border)}
+.note{font-size:13px;color:var(--muted);line-height:1.7}
 
-    @media (max-width: 560px) {
-      .intro-grid, .styles-grid { grid-template-columns: 1fr; }
-      .result-grid { grid-template-columns: repeat(2, 1fr); }
-      .question-item { flex-wrap: wrap; }
-    }
-  </style>
+/* QR SECTION */
+.qr-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;align-items:center;gap:1.5rem}
+.qr-canvas-wrap{flex-shrink:0}
+.qr-info h3{font-size:16px;font-weight:600;margin-bottom:.4rem}
+.qr-info p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:.75rem}
+.qr-url{font-size:12px;font-family:monospace;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);word-break:break-all}
+.btn-dl-qr{margin-top:.75rem;padding:8px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .15s}
+.btn-dl-qr:hover{background:var(--surface2)}
+
+footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:12px;color:var(--hint);text-align:center}
+
+@media(max-width:560px){
+  .coop-grid,.style-cards,.results-grid{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:repeat(2,1fr)}
+  .qr-section{flex-direction:column;align-items:flex-start}
+  .q-actions{flex-direction:column}
+}
+</style>
 </head>
 <body>
-<div class="container">
+<div class="page">
 
-  <div class="hero">
-    <div class="tag">Cours de communication — M. Mbaye</div>
-    <h1>Renforcer son sens du collectif</h1>
-    <p>Styles d'animation d'une prise de décision collégiale — questionnaire d'auto-positionnement et description des 4 grands styles.</p>
-  </div>
-
-  <div class="section">
-    <h2>Pour apprendre à coopérer</h2>
-    <div class="intro-grid">
-      <div class="intro-card">
-        <h3>Les bonnes pratiques</h3>
-        <ul>
-          <li>Partager l'information</li>
-          <li>Solliciter l'avis des autres</li>
-          <li>Décider ensemble</li>
-          <li>Être co-acteur</li>
-          <li>Être co-responsable</li>
-        </ul>
-      </div>
-      <div class="intro-card">
-        <h3>Les bonnes résolutions</h3>
-        <ul>
-          <li>Tomber le masque</li>
-          <li>Accepter la différence</li>
-          <li>Sortir de la justification</li>
-          <li>Faire la part des choses</li>
-          <li>Freiner l'individualisme</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Questionnaire d'auto-positionnement</h2>
-    <div class="quiz-intro">
-      Imaginez que vous êtes l'animateur d'une réunion dont l'enjeu est de prendre une décision à sept, sur un sujet où les positions ont une probabilité élevée d'être divergentes. Répondez par <strong>Oui</strong> ou <strong>Non</strong> à chacune des 40 affirmations.
-    </div>
-    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar" style="width:0%"></div></div>
-    <div class="progress-label"><span id="pcount">0</span> / 40 réponses</div>
-    <div id="questions-list"></div>
-    <div>
-      <button class="btn-calc" onclick="calculer()"><i class="ti ti-chart-bar"></i> Calculer mon style dominant</button>
-      <button class="btn-reset" onclick="resetQuiz()"><i class="ti ti-refresh"></i> Recommencer</button>
-    </div>
-    <div id="result-section">
-      <h2 style="border:none; padding:0; margin-bottom:1rem;">Vos résultats</h2>
-      <div class="result-grid" id="result-grid"></div>
-      <p id="result-comment" style="font-size:14px; color:#5f5e5a; line-height:1.6; background:#f1efe8; border-radius:8px; padding:0.75rem 1rem;"></p>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Les 4 grands styles d'animation</h2>
-    <div class="styles-grid" id="styles-grid"></div>
-  </div>
-
-  <div class="section">
-    <h2>Tableau comparatif des styles</h2>
-    <div class="tableau-wrap">
-      <table class="summary">
-        <thead>
-          <tr>
-            <th>Critères</th>
-            <th>A — Directif</th>
-            <th>B — Régulateur</th>
-            <th>C — Participatif</th>
-            <th>D — Révélateur</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Rendement</strong></td>
-            <td>Transmet</td>
-            <td>Catalyse</td>
-            <td>Catalyse et contribue</td>
-            <td>Remet en question</td>
-          </tr>
-          <tr>
-            <td><strong>Échanges entre participants</strong></td>
-            <td>Impose la nature de la participation et des échanges</td>
-            <td>Fait s'exprimer les points de vue et rend les débats productifs</td>
-            <td>Alterne phases de contribution et d'organisation</td>
-            <td>Stimule la recherche d'innovation sur le contenu</td>
-          </tr>
-          <tr>
-            <td><strong>Influence de l'animateur</strong></td>
-            <td>Intervient à la fois sur le contenu et le déroulement</td>
-            <td>Intervient sur l'organisation de la réunion et des idées</td>
-            <td>Amène le groupe à tirer ses conclusions sans les biaiser</td>
-            <td>Veille à sortir le groupe de ses acquis ou « sentiers battus »</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Dynamique de groupe (Moreno &amp; Lewin, années 1950)</h2>
-    <div class="dynamique-card">
-      <h3>Rôles que chacun prend dans un groupe — souvent sans en avoir conscience</h3>
-      <div class="roles-list">
-        <span class="role-badge">Coordinateur</span>
-        <span class="role-badge">Censeur</span>
-        <span class="role-badge">Arrangeur</span>
-        <span class="role-badge">Saboteur</span>
-        <span class="role-badge">Candide</span>
-      </div>
-    </div>
-    <p class="note">La vie de groupe produit des rôles distincts entre celui qu'on a décidé de jouer à l'avance, celui qu'on croit jouer, celui que les autres attendent de nous, celui qu'ils nous imputent, et celui qu'on a effectivement joué.<br><br>Ces habiletés d'animation ne sont pas naturelles — elles relèvent d'un apprentissage social, notamment par la formation.</p>
-  </div>
-
-  <footer>Cours de communication &mdash; M. Mbaye &mdash; ENSETP/UCAD</footer>
+<div class="hero">
+  <div class="hero-tag">Cours de communication &mdash; M. Mbaye</div>
+  <h1>Renforcer son sens du collectif</h1>
+  <p>Questionnaire d'auto-positionnement sur les styles d'animation d'une prise de décision collégiale.</p>
 </div>
 
+<div class="section">
+  <div class="section-label"><div class="num">1</div><h2>Pour apprendre à coopérer</h2></div>
+  <div class="coop-grid">
+    <div class="coop-card">
+      <h3>Bonnes pratiques</h3>
+      <ul>
+        <li>Partager l'information</li>
+        <li>Solliciter l'avis des autres</li>
+        <li>Décider ensemble</li>
+        <li>Être co-acteur</li>
+        <li>Être co-responsable</li>
+      </ul>
+    </div>
+    <div class="coop-card">
+      <h3>Bonnes résolutions</h3>
+      <ul>
+        <li>Tomber le masque</li>
+        <li>Accepter la différence</li>
+        <li>Sortir de la justification</li>
+        <li>Faire la part des choses</li>
+        <li>Freiner l'individualisme</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label"><div class="num">2</div><h2>Questionnaire — quel est votre style ?</h2></div>
+  <div class="quiz-banner">
+    Imaginez que vous animez une réunion à sept personnes sur un sujet potentiellement clivant. <strong>Répondez Oui ou Non</strong> à chacune des 40 affirmations suivantes pour découvrir votre style d'animation dominant.
+  </div>
+
+  <div class="stepper-header">
+    <div class="stepper-count">Question <span id="q-current">1</span> sur <span>40</span></div>
+    <div class="stepper-pct" id="q-pct">0 %</div>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+
+  <div class="q-card" id="q-card">
+    <div class="q-style-pill" id="q-pill"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-actions">
+      <button class="btn-choice" id="btn-yes" onclick="answer(true)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Oui
+      </button>
+      <button class="btn-choice" id="btn-no" onclick="answer(false)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Non
+      </button>
+    </div>
+    <div class="q-nav">
+      <button class="btn-nav" id="btn-prev" onclick="go(-1)" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Précédent
+      </button>
+      <div class="q-dots" id="q-dots"></div>
+      <button class="btn-nav" id="btn-next" onclick="go(1)">
+        Suivant
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="btn-calc-wrap">
+    <button class="btn-calc" onclick="calculate()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Calculer mon style dominant
+    </button>
+    <button class="btn-reset-sm" onclick="resetAll()">Recommencer</button>
+  </div>
+
+  <div class="results-section" id="results">
+    <div class="results-title">Vos résultats</div>
+    <div class="results-grid" id="r-grid"></div>
+    <div class="r-comment" id="r-comment"></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label"><div class="num">3</div><h2>Les 4 grands styles d'animation</h2></div>
+  <div class="style-cards" id="style-cards"></div>
+</div>
+
+<div class="section">
+  <div class="section-label"><div class="num">4</div><h2>Tableau comparatif</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Critères</th><th>A — Directif</th><th>B — Régulateur</th><th>C — Participatif</th><th>D — Révélateur</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Rendement</strong></td><td>Transmet</td><td>Catalyse</td><td>Catalyse et contribue</td><td>Remet en question</td></tr>
+        <tr><td><strong>Échanges</strong></td><td>Impose la nature de la participation</td><td>Fait s'exprimer les points de vue</td><td>Alterne contribution et organisation</td><td>Stimule l'innovation sur le contenu</td></tr>
+        <tr><td><strong>Influence</strong></td><td>Contenu et déroulement</td><td>Organisation de la réunion</td><td>Guide sans biaiser les conclusions</td><td>Sort le groupe de ses acquis</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label"><div class="num">5</div><h2>Dynamique de groupe</h2></div>
+  <div class="dyn-card">
+    <h3>Rôles observés dans un groupe (Moreno &amp; Lewin, années 1950)</h3>
+    <div class="roles">
+      <span class="role">Coordinateur</span><span class="role">Censeur</span><span class="role">Arrangeur</span><span class="role">Saboteur</span><span class="role">Candide</span>
+    </div>
+    <p class="note">Ces rôles s'exercent souvent sans en avoir pleinement conscience — entre ce qu'on décide de jouer, ce qu'on croit jouer, ce que les autres attendent et ce qu'on joue effectivement. Ces habiletés relèvent d'un apprentissage social, notamment par la formation.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label"><div class="num">6</div><h2>QR Code — accès mobile</h2></div>
+  <div class="qr-section">
+    <div class="qr-canvas-wrap">
+      <canvas id="qr-canvas" width="160" height="160"></canvas>
+    </div>
+    <div class="qr-info">
+      <h3>Partagez ce questionnaire</h3>
+      <p>Vos étudiants peuvent scanner le QR code pour accéder au site directement depuis leur smartphone.</p>
+      <div class="qr-url">https://mamaducubb.github.io/styles-animation/</div>
+      <button class="btn-dl-qr" onclick="downloadQR()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Télécharger le QR code
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>Cours de communication &mdash; M. Mbaye &mdash; ENSETP / UCAD</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
-const questions = [
+const Qs=[
   "Vous vous préparez en réfléchissant à la meilleure décision possible compte tenu des facteurs en présence.",
   "Vous intervenez sur l'organisation de la réunion et des idées sans prendre parti.",
   "Vous vous autorisez à défendre votre propre point de vue.",
@@ -246,71 +329,143 @@ const questions = [
   "Vous vous mettez au service du groupe pour aider tout le monde à progresser."
 ];
 
-const styleMap = { A:[1,5,9,13,17,21,25,29,33,37], B:[2,6,10,14,18,22,26,30,34,38], C:[3,7,11,15,19,23,27,31,35,39], D:[4,8,12,16,20,24,28,32,36,40] };
+const MAP={A:[1,5,9,13,17,21,25,29,33,37],B:[2,6,10,14,18,22,26,30,34,38],C:[3,7,11,15,19,23,27,31,35,39],D:[4,8,12,16,20,24,28,32,36,40]};
 
-const styleInfo = {
-  A: { name:"Directif", color:"#888780", fill:"#F1EFE8", barColor:"#888780", desc:"Être directif, c'est dominer à la fois le contenu et le déroulement. On s'intéresse peu aux personnes et à leurs idées ; il n'y a pas de véritable participation. Utile quand les autres n'ont pas d'avis à formuler ou d'informations à apporter." },
-  B: { name:"Régulateur", color:"#0F6E56", fill:"#E1F5EE", barColor:"#1D9E75", desc:"L'animateur régulateur n'intervient que sur l'organisation de la réunion et des idées. Il préfère laisser le groupe avec une production moindre plutôt qu'enrichie de façon arbitraire. Chef d'orchestre sans produire lui-même." },
-  C: { name:"Participatif", color:"#185FA5", fill:"#E6F1FB", barColor:"#378ADD", desc:"L'animateur se situe à parts égales avec les participants. Il peut défendre un point de vue sans l'imposer, et alterne les phases où il participe et les phases où il organise. Il accepte un peu de désordre." },
-  D: { name:"Révélateur-coopératif", color:"#993C1D", fill:"#FAECE7", barColor:"#D85A30", desc:"Nul n'a plus de compétences que les autres. Animateur et participants unissent leurs efforts à la recherche d'un savoir commun. L'animateur sait s'effacer pour laisser la place à chacun. L'audace collective peut apparaître." }
+const STYLES={
+  A:{name:"Directif",color:"#888780",light:"#F1EFE8",dark:"#444441",bar:"#888780",
+     desc:"L'animateur directif domine à la fois le contenu et le déroulement. Il impose la participation et les échanges sans les susciter. Utile lorsque les participants n'ont pas d'information à apporter ou d'avis à formuler."},
+  B:{name:"Régulateur",color:"#1D9E75",light:"#E1F5EE",dark:"#085041",bar:"#1D9E75",
+     desc:"L'animateur régulateur n'intervient que sur l'organisation de la réunion et des idées. Il veille à ce que les points de vue s'expriment et que les débats soient productifs, sans prendre parti sur le fond."},
+  C:{name:"Participatif",color:"#378ADD",light:"#E6F1FB",dark:"#0C447C",bar:"#378ADD",
+     desc:"L'animateur participatif se situe à égalité avec les participants. Il peut défendre un point de vue sans l'imposer, et alterne les phases de contribution avec les phases d'organisation des échanges."},
+  D:{name:"Révélateur-coopératif",color:"#D85A30",light:"#FAECE7",dark:"#712B13",bar:"#D85A30",
+     desc:"Animateur et participants unissent leurs efforts sans a priori, à la recherche d'un savoir commun. L'animateur sait s'effacer pour valoriser chacun et laisser émerger l'audace collective."}
 };
 
-const answers = {};
+let cur=0;
+const ans={};
 
-function updateProgress() {
-  const count = Object.keys(answers).length;
-  document.getElementById('pbar').style.width = Math.round(count/40*100)+'%';
-  document.getElementById('pcount').textContent = count;
+function getStyle(n){
+  for(const[s,ns] of Object.entries(MAP)) if(ns.includes(n+1)) return s;
+  return 'A';
 }
 
-function toggle(num, val) {
-  answers[num] = val;
-  ['oui','non'].forEach(v => {
-    const b = document.querySelector('.q-'+num+' .btn-'+v);
-    if(b) b.classList.toggle('active', v === val);
-  });
-  updateProgress();
+function renderQ(){
+  const n=cur;
+  const s=getStyle(n);
+  const info=STYLES[s];
+  const card=document.getElementById('q-card');
+  document.getElementById('q-pill').textContent='Style '+s+' — '+info.name;
+  document.getElementById('q-pill').className='q-style-pill pill-'+s.toLowerCase();
+  document.getElementById('q-text').textContent=(n+1)+'. '+Qs[n];
+  const by=document.getElementById('btn-yes');
+  const bn=document.getElementById('btn-no');
+  by.className='btn-choice'+(ans[n]===true?' chosen-yes':'');
+  bn.className='btn-choice'+(ans[n]===false?' chosen-no':'');
+  document.getElementById('q-current').textContent=n+1;
+  const done=Object.keys(ans).length;
+  const pct=Math.round(done/40*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('q-pct').textContent=pct+' %';
+  document.getElementById('btn-prev').disabled=n===0;
+  document.getElementById('btn-next').disabled=n===39;
+  renderDots();
 }
 
-function calculer() {
-  const scores = { A:0, B:0, C:0, D:0 };
-  for (const [style, nums] of Object.entries(styleMap)) {
-    for (const n of nums) { if (answers[n] === 'oui') scores[style]++; }
+function renderDots(){
+  const wrap=document.getElementById('q-dots');
+  wrap.innerHTML='';
+  for(let i=0;i<40;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===cur?' current':ans[i]!==undefined?' answered':'');
+    d.onclick=(function(idx){return function(){cur=idx;renderQ()}})(i);
+    wrap.appendChild(d);
   }
-  const max = Math.max(...Object.values(scores));
-  const dominant = Object.entries(scores).filter(([,v]) => v === max).map(([k]) => k);
-  const grid = document.getElementById('result-grid');
-  grid.innerHTML = '';
-  for (const [s, score] of Object.entries(scores)) {
-    const info = styleInfo[s];
-    const isDom = dominant.includes(s);
-    const pct = Math.round(score/10*100);
-    grid.innerHTML += '<div class="result-card'+(isDom?' dominant':'')+'"><div class="result-badge">Style dominant</div><div class="result-style-letter" style="color:'+info.color+'">'+s+'</div><div class="result-style-name">'+info.name+'</div><div class="result-score">'+score+'<span style="font-size:14px;color:#888780">/10</span></div><div class="result-score-label">'+pct+'%</div><div class="result-bar-wrap"><div class="result-bar-fill" style="width:'+pct+'%;background:'+info.barColor+'"></div></div></div>';
+}
+
+function answer(v){
+  ans[cur]=v;
+  renderQ();
+  if(cur<39){setTimeout(()=>{cur++;renderQ()},260)}
+}
+
+function go(d){
+  cur=Math.max(0,Math.min(39,cur+d));
+  renderQ();
+}
+
+function calculate(){
+  const scores={A:0,B:0,C:0,D:0};
+  for(const[s,ns] of Object.entries(MAP)) for(const n of ns) if(ans[n-1]===true) scores[s]++;
+  const max=Math.max(...Object.values(scores));
+  const doms=Object.entries(scores).filter(([,v])=>v===max).map(([k])=>k);
+  const grid=document.getElementById('r-grid');
+  grid.innerHTML='';
+  for(const[s,sc] of Object.entries(scores)){
+    const info=STYLES[s];
+    const isDom=doms.includes(s);
+    const pct=Math.round(sc/10*100);
+    const card=document.createElement('div');
+    card.className='r-card'+(isDom?' dom':'');
+    card.innerHTML='<div class="r-dom-badge">Dominant</div>'
+      +'<div class="r-letter" style="color:'+info.color+'">'+s+'</div>'
+      +'<div class="r-name">'+info.name+'</div>'
+      +'<div class="r-num">'+sc+'<span class="r-denom">/10</span></div>'
+      +'<div class="r-bar-bg"><div class="r-bar-fill" style="width:0%;background:'+info.bar+'" data-w="'+pct+'%"></div></div>';
+    grid.appendChild(card);
   }
-  const domNames = dominant.map(d => 'Style '+d+' ('+styleInfo[d].name+')').join(' et ');
-  document.getElementById('result-comment').textContent = 'Votre style dominant est : '+domNames+'. Ces habiletés ne sont pas naturelles — elles relèvent d\'un apprentissage social. Identifiez les styles sur lesquels vous pouvez vous entraîner par la formation.';
-  const rs = document.getElementById('result-section');
-  rs.style.display = 'block';
-  rs.scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(()=>{
+    document.querySelectorAll('.r-bar-fill').forEach(b=>b.style.width=b.dataset.w);
+  },50);
+  const domNames=doms.map(d=>'Style '+d+' ('+STYLES[d].name+')').join(' et ');
+  document.getElementById('r-comment').textContent='Votre style dominant : '+domNames+'. Ces habiletés relèvent d\'un apprentissage social — identifiez les styles sur lesquels vous souhaitez progresser par la formation.';
+  const rs=document.getElementById('results');
+  rs.style.display='block';
+  setTimeout(()=>rs.scrollIntoView({behavior:'smooth',block:'start'}),100);
 }
 
-function resetQuiz() {
-  Object.keys(answers).forEach(k => delete answers[k]);
-  document.querySelectorAll('.btn-oui,.btn-non').forEach(b => b.classList.remove('active'));
-  document.getElementById('result-section').style.display = 'none';
-  updateProgress();
+function resetAll(){
+  Object.keys(ans).forEach(k=>delete ans[k]);
+  cur=0;
+  document.getElementById('results').style.display='none';
+  renderQ();
 }
 
-const ql = document.getElementById('questions-list');
-questions.forEach((text, i) => {
-  const num = i+1;
-  ql.innerHTML += '<div class="question-item q-'+num+'"><div class="question-num">'+num+'.</div><div class="question-text">'+text+'</div><div class="question-btns"><button class="btn-oui" onclick="toggle('+num+',\'oui\')">Oui</button><button class="btn-non" onclick="toggle('+num+',\'non\')">Non</button></div></div>';
-});
-
-const sg = document.getElementById('styles-grid');
-for (const [s, info] of Object.entries(styleInfo)) {
-  sg.innerHTML += '<div class="style-card"><div class="style-card-header" style="background:'+info.fill+'"><div class="style-letter-badge" style="background:'+info.fill+';border:1px solid '+info.color+';color:'+info.color+'">'+s+'</div><div><div class="style-card-title">Style '+info.name+'</div><div class="style-card-sub">Questions : '+styleMap[s].join(', ')+'</div></div></div><div class="style-card-body">'+info.desc+'</div></div>';
+function buildStyleCards(){
+  const wrap=document.getElementById('style-cards');
+  for(const[s,info] of Object.entries(STYLES)){
+    const c=document.createElement('div');
+    c.className='sc';
+    c.innerHTML='<div class="sc-head" style="background:'+info.light+'">'
+      +'<div class="sc-badge" style="background:'+info.light+';border:2px solid '+info.color+';color:'+info.dark+'">'+s+'</div>'
+      +'<div><div class="sc-label" style="color:'+info.dark+'">'+info.name+'</div>'
+      +'<div class="sc-qs">Questions : '+MAP[s].join(' · ')+'</div></div></div>'
+      +'<div class="sc-body">'+info.desc+'</div>';
+    wrap.appendChild(c);
+  }
 }
+
+function buildQR(){
+  const canvas=document.getElementById('qr-canvas');
+  const url='https://mamaducubb.github.io/styles-animation/';
+  if(typeof QRCode!=='undefined'){
+    new QRCode(canvas,{text:url,width:160,height:160,colorDark:'#1c1b19',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  }
+}
+
+function downloadQR(){
+  const canvas=document.getElementById('qr-canvas');
+  const cvs=canvas.tagName==='CANVAS'?canvas:canvas.querySelector('canvas');
+  if(!cvs) return;
+  const a=document.createElement('a');
+  a.download='qrcode-styles-animation.png';
+  a.href=cvs.toDataURL('image/png');
+  a.click();
+}
+
+renderQ();
+buildStyleCards();
+window.addEventListener('load',buildQR);
 </script>
 </body>
 </html>
