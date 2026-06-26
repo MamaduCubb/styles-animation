@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Styles d'animation — M. Mbaye</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f9f8f6; color: #1a1a18; min-height: 100vh; }
+    .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    .hero { padding: 2rem 0 1.5rem; border-bottom: 1px solid #e0ded6; margin-bottom: 2rem; }
+    .tag { font-size: 12px; color: #185FA5; background: #E6F1FB; border-radius: 8px; padding: 3px 10px; display: inline-block; margin-bottom: 0.75rem; }
+    .hero h1 { font-size: 26px; font-weight: 500; margin-bottom: 0.5rem; }
+    .hero p { font-size: 14px; color: #5f5e5a; line-height: 1.6; }
+
+    .section { margin-bottom: 2.5rem; }
+    .section h2 { font-size: 18px; font-weight: 500; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e0ded6; }
+
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+    .intro-card { background: #f1efe8; border-radius: 12px; padding: 1rem 1.25rem; }
+    .intro-card h3 { font-size: 12px; font-weight: 500; color: #5f5e5a; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .intro-card ul { list-style: none; font-size: 14px; line-height: 1.9; }
+    .intro-card ul li::before { content: "→ "; color: #888780; }
+
+    .quiz-intro { font-size: 14px; color: #5f5e5a; margin-bottom: 1rem; line-height: 1.6; background: #f1efe8; border-radius: 8px; padding: 0.75rem 1rem; }
+
+    .progress-bar-wrap { background: #e0ded6; border-radius: 99px; height: 6px; margin: 1rem 0 0.4rem; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 99px; background: #1D9E75; transition: width 0.3s; }
+    .progress-label { font-size: 12px; color: #888780; text-align: right; }
+
+    .question-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e8e6de; }
+    .question-num { font-size: 12px; font-weight: 500; color: #888780; min-width: 24px; margin-top: 3px; }
+    .question-text { font-size: 14px; flex: 1; line-height: 1.5; }
+    .question-btns { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-oui, .btn-non { padding: 4px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; border: 1px solid #ccc; background: #fff; color: #1a1a18; transition: all 0.15s; }
+    .btn-oui.active { background: #E1F5EE; border-color: #0F6E56; color: #085041; font-weight: 500; }
+    .btn-non.active { background: #f1efe8; border-color: #888780; color: #2c2c2a; font-weight: 500; }
+
+    .btn-calc { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 8px; background: #fff; border: 1px solid #bbb; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 1.25rem; transition: background 0.15s; }
+    .btn-calc:hover { background: #f1efe8; }
+    .btn-reset { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; background: transparent; border: 1px solid #ddd; font-size: 13px; cursor: pointer; margin-top: 0.75rem; margin-left: 8px; color: #5f5e5a; }
+    .btn-reset:hover { background: #f1efe8; }
+
+    #result-section { display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e0ded6; }
+    .result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.25rem; }
+    .result-card { border-radius: 12px; padding: 1rem; text-align: center; border: 1px solid #e0ded6; background: #fff; position: relative; }
+    .result-card.dominant { border: 2px solid #1D9E75; }
+    .result-badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 8px; background: #E1F5EE; color: #085041; position: absolute; top: -11px; left: 50%; transform: translateX(-50%); white-space: nowrap; display: none; }
+    .result-card.dominant .result-badge { display: block; }
+    .result-style-letter { font-size: 28px; font-weight: 500; margin-bottom: 4px; }
+    .result-style-name { font-size: 11px; color: #888780; margin-bottom: 8px; }
+    .result-score { font-size: 22px; font-weight: 500; }
+    .result-score-label { font-size: 11px; color: #888780; }
+    .result-bar-wrap { height: 6px; border-radius: 99px; margin-top: 8px; background: #f1efe8; overflow: hidden; }
+    .result-bar-fill { height: 100%; border-radius: 99px; }
+
+    .styles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .style-card { border-radius: 12px; border: 1px solid #e0ded6; background: #fff; overflow: hidden; }
+    .style-card-header { padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 10px; }
+    .style-letter-badge { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; flex-shrink: 0; }
+    .style-card-title { font-size: 15px; font-weight: 500; }
+    .style-card-sub { font-size: 11px; color: #888780; }
+    .style-card-body { padding: 0.75rem 1.25rem 1rem; font-size: 13px; color: #5f5e5a; line-height: 1.6; border-top: 1px solid #f0ede5; }
+
+    .tableau-wrap { overflow-x: auto; }
+    table.summary { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.summary th { background: #f1efe8; padding: 10px 12px; text-align: left; font-weight: 500; border-bottom: 1px solid #e0ded6; }
+    table.summary td { padding: 10px 12px; border-bottom: 1px solid #e8e6de; vertical-align: top; line-height: 1.5; }
+    table.summary tr:last-child td { border-bottom: none; }
+
+    .dynamique-card { background: #f1efe8; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+    .dynamique-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 0.6rem; }
+    .roles-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .role-badge { font-size: 12px; padding: 4px 12px; border-radius: 99px; background: #fff; border: 1px solid #d3d1c7; }
+    .note { font-size: 13px; color: #5f5e5a; line-height: 1.7; }
+
+    footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e0ded6; font-size: 12px; color: #888780; text-align: center; }
+
+    @media (max-width: 560px) {
+      .intro-grid, .styles-grid { grid-template-columns: 1fr; }
+      .result-grid { grid-template-columns: repeat(2, 1fr); }
+      .question-item { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="hero">
+    <div class="tag">Cours de communication — M. Mbaye</div>
+    <h1>Renforcer son sens du collectif</h1>
+    <p>Styles d'animation d'une prise de décision collégiale — questionnaire d'auto-positionnement et description des 4 grands styles.</p>
+  </div>
+
+  <div class="section">
+    <h2>Pour apprendre à coopérer</h2>
+    <div class="intro-grid">
+      <div class="intro-card">
+        <h3>Les bonnes pratiques</h3>
+        <ul>
+          <li>Partager l'information</li>
+          <li>Solliciter l'avis des autres</li>
+          <li>Décider ensemble</li>
+          <li>Être co-acteur</li>
+          <li>Être co-responsable</li>
+        </ul>
+      </div>
+      <div class="intro-card">
+        <h3>Les bonnes résolutions</h3>
+        <ul>
+          <li>Tomber le masque</li>
+          <li>Accepter la différence</li>
+          <li>Sortir de la justification</li>
+          <li>Faire la part des choses</li>
+          <li>Freiner l'individualisme</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Questionnaire d'auto-positionnement</h2>
+    <div class="quiz-intro">
+      Imaginez que vous êtes l'animateur d'une réunion dont l'enjeu est de prendre une décision à sept, sur un sujet où les positions ont une probabilité élevée d'être divergentes. Répondez par <strong>Oui</strong> ou <strong>Non</strong> à chacune des 40 affirmations.
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar" style="width:0%"></div></div>
+    <div class="progress-label"><span id="pcount">0</span> / 40 réponses</div>
+    <div id="questions-list"></div>
+    <div>
+      <button class="btn-calc" onclick="calculer()"><i class="ti ti-chart-bar"></i> Calculer mon style dominant</button>
+      <button class="btn-reset" onclick="resetQuiz()"><i class="ti ti-refresh"></i> Recommencer</button>
+    </div>
+    <div id="result-section">
+      <h2 style="border:none; padding:0; margin-bottom:1rem;">Vos résultats</h2>
+      <div class="result-grid" id="result-grid"></div>
+      <p id="result-comment" style="font-size:14px; color:#5f5e5a; line-height:1.6; background:#f1efe8; border-radius:8px; padding:0.75rem 1rem;"></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Les 4 grands styles d'animation</h2>
+    <div class="styles-grid" id="styles-grid"></div>
+  </div>
+
+  <div class="section">
+    <h2>Tableau comparatif des styles</h2>
+    <div class="tableau-wrap">
+      <table class="summary">
+        <thead>
+          <tr>
+            <th>Critères</th>
+            <th>A — Directif</th>
+            <th>B — Régulateur</th>
+            <th>C — Participatif</th>
+            <th>D — Révélateur</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Rendement</strong></td>
+            <td>Transmet</td>
+            <td>Catalyse</td>
+            <td>Catalyse et contribue</td>
+            <td>Remet en question</td>
+          </tr>
+          <tr>
+            <td><strong>Échanges entre participants</strong></td>
+            <td>Impose la nature de la participation et des échanges</td>
+            <td>Fait s'exprimer les points de vue et rend les débats productifs</td>
+            <td>Alterne phases de contribution et d'organisation</td>
+            <td>Stimule la recherche d'innovation sur le contenu</td>
+          </tr>
+          <tr>
+            <td><strong>Influence de l'animateur</strong></td>
+            <td>Intervient à la fois sur le contenu et le déroulement</td>
+            <td>Intervient sur l'organisation de la réunion et des idées</td>
+            <td>Amène le groupe à tirer ses conclusions sans les biaiser</td>
+            <td>Veille à sortir le groupe de ses acquis ou « sentiers battus »</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Dynamique de groupe (Moreno &amp; Lewin, années 1950)</h2>
+    <div class="dynamique-card">
+      <h3>Rôles que chacun prend dans un groupe — souvent sans en avoir conscience</h3>
+      <div class="roles-list">
+        <span class="role-badge">Coordinateur</span>
+        <span class="role-badge">Censeur</span>
+        <span class="role-badge">Arrangeur</span>
+        <span class="role-badge">Saboteur</span>
+        <span class="role-badge">Candide</span>
+      </div>
+    </div>
+    <p class="note">La vie de groupe produit des rôles distincts entre celui qu'on a décidé de jouer à l'avance, celui qu'on croit jouer, celui que les autres attendent de nous, celui qu'ils nous imputent, et celui qu'on a effectivement joué.<br><br>Ces habiletés d'animation ne sont pas naturelles — elles relèvent d'un apprentissage social, notamment par la formation.</p>
+  </div>
+
+  <footer>Cours de communication &mdash; M. Mbaye &mdash; ENSETP/UCAD</footer>
+</div>
+
+<script>
+const questions = [
+  "Vous vous préparez en réfléchissant à la meilleure décision possible compte tenu des facteurs en présence.",
+  "Vous intervenez sur l'organisation de la réunion et des idées sans prendre parti.",
+  "Vous vous autorisez à défendre votre propre point de vue.",
+  "Si un participant souhaite prendre le relais de l'animation, vous lui cédez volontiers le rôle.",
+  "Vous définissez avant la réunion un plan de déroulement pour que chacun puisse s'exprimer.",
+  "Vous préférez laisser le groupe arriver à une décision de moindre qualité à vos yeux, mais satisfaisante pour tous.",
+  "Il y a une différence entre défendre son point de vue et l'imposer.",
+  "Vous vous joignez aux participants pour chercher une solution commune.",
+  "Vous recadrez les échanges quand il y a un dérapage hors sujet.",
+  "Vous veillez à ce que tous les points de vue se soient exprimés.",
+  "Vous vous abstenez d'orienter la décision du groupe.",
+  "Vous recherchez la coopération entre les tendances en réduisant les effets « dominant/dominé ».",
+  "Vous reprenez, dans les idées exprimées, celles qui se rapprochent de votre position pour créer des alliances.",
+  "Vous créez les conditions d'un débat productif.",
+  "Vous acceptez un peu de désordre dans les échanges.",
+  "Vous faites table rase du déjà-vu pour que le groupe découvre du nouveau et de l'original.",
+  "Vous créez les conditions pour que les échanges permettent aux participants de découvrir la meilleure solution.",
+  "Vous faites en sorte que chacun s'intéresse positivement aux autres.",
+  "Vous veillez au respect de l'organisation des débats.",
+  "Le choix de la méthode de travail appartient au groupe, pas à l'animateur.",
+  "Vous détectez les personnes les plus productives pour vous appuyer sur elles.",
+  "Vous prenez soin de reprendre en termes positifs les propos négatifs tenus par les personnes les plus virulentes.",
+  "Quand vous animez, vous vous abstenez de donner votre avis sur le sujet.",
+  "Pour commencer, il faut se débarrasser de ce que chacun sait de solutions existantes ou avoisinantes.",
+  "Vous cherchez à rallier à votre point de vue les personnes qui n'ont pas d'avis ou d'opinion sur le sujet.",
+  "Vous bannissez les jugements de valeur entre les participants et rappelez la bienséance si nécessaire.",
+  "Quand vous exprimez votre avis, vous précisez qu'il n'engage que vous.",
+  "Vous cherchez à associer les idées des uns à celles des autres pour faire du neuf.",
+  "Vous commencez par informer l'auditoire de ce qu'ils doivent savoir du sujet et du périmètre dans lequel la décision doit se prendre.",
+  "Vous évitez d'apporter votre propre décision même si le groupe patine.",
+  "Vous apportez vos idées au même titre que tous les autres participants.",
+  "Vous faites attention de ne pas écraser les participants les moins audacieux.",
+  "Vous faites en sorte d'isoler « le rebelle de service » en retournant le groupe contre lui.",
+  "Vous entretenez le niveau de dynamisme dans les échanges.",
+  "Vous prenez soin de signaler quand vous « changez de casquette », animateur ou contributeur.",
+  "Vous vous effacez de la scène d'animation dans les moments où le groupe fonctionne bien par lui-même.",
+  "Vous surveillez le timing pour garantir que tous les points à étudier le soient bien.",
+  "Vous permettez à chacun de défendre son point de vue.",
+  "Vous évitez toute contrainte personnelle sur le déroulement de la réunion.",
+  "Vous vous mettez au service du groupe pour aider tout le monde à progresser."
+];
+
+const styleMap = { A:[1,5,9,13,17,21,25,29,33,37], B:[2,6,10,14,18,22,26,30,34,38], C:[3,7,11,15,19,23,27,31,35,39], D:[4,8,12,16,20,24,28,32,36,40] };
+
+const styleInfo = {
+  A: { name:"Directif", color:"#888780", fill:"#F1EFE8", barColor:"#888780", desc:"Être directif, c'est dominer à la fois le contenu et le déroulement. On s'intéresse peu aux personnes et à leurs idées ; il n'y a pas de véritable participation. Utile quand les autres n'ont pas d'avis à formuler ou d'informations à apporter." },
+  B: { name:"Régulateur", color:"#0F6E56", fill:"#E1F5EE", barColor:"#1D9E75", desc:"L'animateur régulateur n'intervient que sur l'organisation de la réunion et des idées. Il préfère laisser le groupe avec une production moindre plutôt qu'enrichie de façon arbitraire. Chef d'orchestre sans produire lui-même." },
+  C: { name:"Participatif", color:"#185FA5", fill:"#E6F1FB", barColor:"#378ADD", desc:"L'animateur se situe à parts égales avec les participants. Il peut défendre un point de vue sans l'imposer, et alterne les phases où il participe et les phases où il organise. Il accepte un peu de désordre." },
+  D: { name:"Révélateur-coopératif", color:"#993C1D", fill:"#FAECE7", barColor:"#D85A30", desc:"Nul n'a plus de compétences que les autres. Animateur et participants unissent leurs efforts à la recherche d'un savoir commun. L'animateur sait s'effacer pour laisser la place à chacun. L'audace collective peut apparaître." }
+};
+
+const answers = {};
+
+function updateProgress() {
+  const count = Object.keys(answers).length;
+  document.getElementById('pbar').style.width = Math.round(count/40*100)+'%';
+  document.getElementById('pcount').textContent = count;
+}
+
+function toggle(num, val) {
+  answers[num] = val;
+  ['oui','non'].forEach(v => {
+    const b = document.querySelector('.q-'+num+' .btn-'+v);
+    if(b) b.classList.toggle('active', v === val);
+  });
+  updateProgress();
+}
+
+function calculer() {
+  const scores = { A:0, B:0, C:0, D:0 };
+  for (const [style, nums] of Object.entries(styleMap)) {
+    for (const n of nums) { if (answers[n] === 'oui') scores[style]++; }
+  }
+  const max = Math.max(...Object.values(scores));
+  const dominant = Object.entries(scores).filter(([,v]) => v === max).map(([k]) => k);
+  const grid = document.getElementById('result-grid');
+  grid.innerHTML = '';
+  for (const [s, score] of Object.entries(scores)) {
+    const info = styleInfo[s];
+    const isDom = dominant.includes(s);
+    const pct = Math.round(score/10*100);
+    grid.innerHTML += '<div class="result-card'+(isDom?' dominant':'')+'"><div class="result-badge">Style dominant</div><div class="result-style-letter" style="color:'+info.color+'">'+s+'</div><div class="result-style-name">'+info.name+'</div><div class="result-score">'+score+'<span style="font-size:14px;color:#888780">/10</span></div><div class="result-score-label">'+pct+'%</div><div class="result-bar-wrap"><div class="result-bar-fill" style="width:'+pct+'%;background:'+info.barColor+'"></div></div></div>';
+  }
+  const domNames = dominant.map(d => 'Style '+d+' ('+styleInfo[d].name+')').join(' et ');
+  document.getElementById('result-comment').textContent = 'Votre style dominant est : '+domNames+'. Ces habiletés ne sont pas naturelles — elles relèvent d\'un apprentissage social. Identifiez les styles sur lesquels vous pouvez vous entraîner par la formation.';
+  const rs = document.getElementById('result-section');
+  rs.style.display = 'block';
+  rs.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetQuiz() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.btn-oui,.btn-non').forEach(b => b.classList.remove('active'));
+  document.getElementById('result-section').style.display = 'none';
+  updateProgress();
+}
+
+const ql = document.getElementById('questions-list');
+questions.forEach((text, i) => {
+  const num = i+1;
+  ql.innerHTML += '<div class="question-item q-'+num+'"><div class="question-num">'+num+'.</div><div class="question-text">'+text+'</div><div class="question-btns"><button class="btn-oui" onclick="toggle('+num+',\'oui\')">Oui</button><button class="btn-non" onclick="toggle('+num+',\'non\')">Non</button></div></div>';
+});
+
+const sg = document.getElementById('styles-grid');
+for (const [s, info] of Object.entries(styleInfo)) {
+  sg.innerHTML += '<div class="style-card"><div class="style-card-header" style="background:'+info.fill+'"><div class="style-letter-badge" style="background:'+info.fill+';border:1px solid '+info.color+';color:'+info.color+'">'+s+'</div><div><div class="style-card-title">Style '+info.name+'</div><div class="style-card-sub">Questions : '+styleMap[s].join(', ')+'</div></div></div><div class="style-card-body">'+info.desc+'</div></div>';
+}
+</script>
+</body>
+</html>
